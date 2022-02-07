@@ -1,14 +1,11 @@
 package com.ht.testtool;
 
-import com.ht.testtool.testt.TestApp;
-import javax.swing.*;
+import com.ht.testtool.ui.MainFrame;
 
 public class AppMain {
+  public static final String APP_VERSION = "0.1";
+
   public static void main(String[] args) {
-    JFrame frame = new JFrame("App");
-    frame.setContentPane(new TestApp().getMainPanel());
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.pack();
-    frame.setVisible(true);
+    MainFrame.getInstance().setVisible(true);
   }
 }
