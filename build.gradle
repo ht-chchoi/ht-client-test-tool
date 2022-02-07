@@ -3,14 +3,41 @@ plugins {
 }
 
 group 'com.ht'
+version '0.2'
 
 repositories {
     mavenCentral()
+    flatDir dirs: "${rootDir}/lib"
 }
 
 dependencies {
+    implementation 'com.intellij:forms_rt:7.0.3'
+
+    implementation 'ch.qos.logback:logback-core:1.2.10'
+    implementation 'ch.qos.logback:logback-classic:1.2.10'
+
+    implementation 'org.projectlombok:lombok:1.18.22'
 }
 
 test {
     useJUnitPlatform()
+}
+
+compileJava.options.encoding = 'UTF-8'
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.ht.testtool.AppMain'
+    }
+
+    from {
+        configurations.runtimeClasspath.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
