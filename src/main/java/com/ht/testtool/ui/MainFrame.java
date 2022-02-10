@@ -1,11 +1,14 @@
 package com.ht.testtool.ui;
 
-import com.ht.testtool.AppMain;
+import lombok.extern.slf4j.Slf4j;
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.swing.*;
+import java.io.*;
 
+@Slf4j
 public class MainFrame extends JFrame {
   private static MainFrame INSTANCE;
 
@@ -23,16 +26,16 @@ public class MainFrame extends JFrame {
 
   private static MainFrame createInstance() {
     MainFrame mainFrame = new MainFrame();
-    mainFrame.setTitle("HT 통합 테스트툴 [" + AppMain.APP_VERSION + "]");
+    mainFrame.setTitle("HT 통합 테스트툴 ver=[" + getVersion() + "]");
     mainFrame.setContentPane(new ControllerPage().getMainPanel());
     mainFrame.addWindowListener(new WindowAdapter() {
       @Override
       public void windowClosing(final WindowEvent e) {
         int confirmed = JOptionPane.showConfirmDialog(
-          null,
-          "모든 툴을 종료하시겠습니까?",
-          "종료 확인",
-          JOptionPane.YES_NO_OPTION);
+            null,
+            "모든 툴을 종료하시겠습니까?",
+            "종료 확인",
+            JOptionPane.YES_NO_OPTION);
         if (confirmed == JOptionPane.YES_OPTION) {
           mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         } else {
@@ -45,5 +48,24 @@ public class MainFrame extends JFrame {
     mainFrame.pack();
 
     return mainFrame;
+  }
+
+  public static void exitWithErrorDialog(String errorMsg) {
+    log.error(errorMsg);
+    JOptionPane.showMessageDialog(null, errorMsg);
+    System.exit(ERROR);
+  }
+
+  private static String getVersion() {
+    try {
+      InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("version");
+      if (is == null) {
+        return "DEV";
+      }
+      return new BufferedReader(new InputStreamReader(is)).readLine();
+    } catch (IOException e) {
+      log.warn("Version File Not Exist, Check [gradle.build] File");
+      return "No Version Info";
+    }
   }
 }

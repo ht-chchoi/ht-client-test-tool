@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'com.ht'
-version '0.2'
+version '0.3'
 
 repositories {
     mavenCentral()
@@ -18,6 +18,11 @@ dependencies {
 
     compileOnly 'org.projectlombok:lombok:1.18.22'
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
+
+    // https://mvnrepository.com/artifact/com.google.code.gson/gson
+    implementation group: 'com.google.code.gson', name: 'gson', version: '2.8.9'
+
+    implementation 'io.netty:netty-all:4.1.72.Final'
 }
 
 test {
@@ -30,6 +35,12 @@ tasks.withType(JavaCompile) {
 }
 
 jar {
+    // 빌드 버전 파일로 추출
+    doFirst {
+        def file = new File("$buildDir/resources/main/version")
+        file.write(project.version.toString())
+    }
+
     manifest {
         attributes 'Main-Class': 'com.ht.testtool.AppMain'
     }
