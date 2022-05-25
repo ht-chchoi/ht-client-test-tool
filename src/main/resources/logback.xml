@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="30 seconds">
-    <property name="LOGS_ABSOLUTE_PATH" value="./logs" />
+    <property name="LOGS_ABSOLUTE_PATH" value="./test_tool_logs" />
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -14,15 +14,15 @@
             <pattern>[%d{yyyy-MM-dd HH:mm:ss}:%-3relative] [%thread] %-5level %logger{35} - %msg%n</pattern>
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOGS_ABSOLUTE_PATH}/logback.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <fileNamePattern>${LOGS_ABSOLUTE_PATH}/ht-client-test-tool.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy                  class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <!-- or whenever the file size reaches 100MB -->
-                <maxFileSize>100MB</maxFileSize>
+                <!-- or whenever the file size reaches 10MB -->
+                <maxFileSize>10MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
     </appender>
 
-    <root level="info">
+    <root level="DEBUG">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="ROLLING" />
     </root>

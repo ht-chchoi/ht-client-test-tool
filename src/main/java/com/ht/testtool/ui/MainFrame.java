@@ -6,7 +6,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 @Slf4j
 public class MainFrame extends JFrame {
@@ -27,7 +30,7 @@ public class MainFrame extends JFrame {
   private static MainFrame createInstance() {
     MainFrame mainFrame = new MainFrame();
     mainFrame.setTitle("HT 통합 테스트툴 ver=[" + getVersion() + "]");
-    mainFrame.setContentPane(new ControllerPage().getMainPanel());
+    mainFrame.setContentPane(new ControllerPage(mainFrame).getMainPanel());
     mainFrame.addWindowListener(new WindowAdapter() {
       @Override
       public void windowClosing(final WindowEvent e) {
